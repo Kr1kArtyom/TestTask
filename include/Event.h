@@ -2,7 +2,7 @@
 
 #include <chrono>
 #include <string>
-#include "Time.h"
+#include "MyTime.h"
 
 struct Event {
     static const int withoutTable = 0;

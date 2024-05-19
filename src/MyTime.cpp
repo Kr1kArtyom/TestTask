@@ -1,27 +1,31 @@
-#include "../include/Time.h"
+#include "../include/MyTime.h"
 
 Time::Time() : hours(0), minutes(0) {}
 Time::Time(int h, int m) {
     if (h < 0 || h > 23 || m < 0 || m > 59) {
-        throw std::invalid_argument("Invalid time: hours and minutes must be within valid range");
+        throw std::invalid_argument("Input data format error");
     }
     hours = h;
     minutes = m;
 };
 
 Time ParseTime(std::string str) {
-    std::istringstream ss(str);
-    int h, m;
-    char colon;
-    if (!(ss >> h >> colon >> m) || colon != ':' || h < 0 || h > 23 || m < 0 || m > 59) {
-        throw std::invalid_argument("Invalid time format: " + str);
+    std::regex timeFormat("^\\d{2}:\\d{2}$");
+    if (!std::regex_match(str, timeFormat)) {
+        throw std::invalid_argument("Input data format error");
     }
-    return { h, m };
+
+    std::istringstream iss(str);
+    int hours, minutes;
+    char colon;
+    iss >> hours >> colon >> minutes;
+
+    return { hours, minutes };
 }
 
 std::string ToString(Time time) {
     if (time.hours < 0 || time.hours > 23 || time.minutes < 0 || time.minutes > 59) {
-        throw std::invalid_argument("Invalid time: " + std::to_string(time.hours) + ":" + std::to_string(time.minutes));
+        throw std::invalid_argument("Input data format error");
     }
     std::ostringstream ss;
     ss << std::setfill('0') << std::setw(2) << time.hours << ":"

@@ -9,7 +9,7 @@
 #include <fstream>
 #include <map>
 #include "ComputerClub.h"
-#include "Time.h"
+#include "MyTime.h"
 
 class Parser {
 private:

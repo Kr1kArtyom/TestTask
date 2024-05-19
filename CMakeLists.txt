@@ -1,7 +1,9 @@
-cmake_minimum_required(VERSION 3.5)
-project(YourProjectName)
+cmake_minimum_required(VERSION 3.21.3)
+project(TestTask)
 
-# Установка переменной для каталога с заголовочными файлами
+set(CMAKE_CXX_STANDARD 17)
+
+# Указание каталога для заголовочных файлов
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 
 # Установка переменной для каталога с исходными файлами
@@ -12,8 +14,8 @@ include_directories(${INCLUDE_DIR})
 
 # Создание списка исходных файлов
 set(SOURCES
-    ${SRC_DIR}/Event.cpp
-    ${SRC_DIR}/Time.cpp
+    ${SRC_DIR}/Event.cpp 
+    ${SRC_DIR}/MyTime.cpp
     ${SRC_DIR}/ComputerClub.cpp
     ${SRC_DIR}/Parser.cpp
     ${SRC_DIR}/Table.cpp

@@ -1,8 +1,8 @@
 #include "../include/Table.h"
 
-Table::Table() : id(0), isOccupied(false), revenue(0), workTime(0, 0) {}
+Table::Table() : id(0), isOccupied(false), revenue(0), workTime() {}
 
-Table::Table(int _id) : id(_id), isOccupied(false), revenue(0), workTime(0, 0) {}
+Table::Table(int _id) : id(_id), isOccupied(false), revenue(0), workTime() {}
 
 void Table::PrintParams() const {
     std::string time = ToString(workTime);

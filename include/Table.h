@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <chrono>
 #include <sstream>
-#include "Time.h"
+#include "MyTime.h"
 
 class Table {
 private:

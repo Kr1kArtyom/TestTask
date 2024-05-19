@@ -80,9 +80,10 @@ void ComputerClub::CloseShift() {
 
 void ComputerClub::HandleEvent(Event event) {
     if (!ValidateEvent(event)) {
-        throw std::invalid_argument("Invalid event data");
+        throw std::invalid_argument("HandleEvent throw an exception: Input data format error");
+        return;
     }
-
+    
     std::cout << EventToString(event) << std::endl;
 
     switch (event.id) {
@@ -192,7 +193,6 @@ void ComputerClub::GenerateOutClientSitEvent(Event event, int numTable) {
         Events::OUTCLIENTSIT,
         clientFromQueue,
         numTable
-        //Event::withoutMessage
     };
 
     HandleOutClientSit(newEvent);
@@ -211,7 +211,6 @@ void ComputerClub::GenerateOutClientLeftEvent(Event event) {
         Events::OUTCLIENTLEFT,
         event.client,
         Event::withoutTable
-        //Event::withoutMessage
     };
 
     HandleOutClientLeft(newEvent);
