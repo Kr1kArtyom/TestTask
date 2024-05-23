@@ -155,7 +155,7 @@ void ComputerClub::HadleClientWait(Event event) {
         return;
     }
 
-    if (queue.size() > numTables) {
+    if (queue.size() >= numTables) {
         GenerateOutClientLeftEvent(event);
         return;
     }

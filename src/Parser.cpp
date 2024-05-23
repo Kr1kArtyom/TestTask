@@ -11,7 +11,7 @@ int Parser::ParseInt(const std::string& line) {
         return number;
     }
     catch (const std::invalid_argument& e) {
-        throw std::invalid_argument(std::string("ParseInt throw an exception: ") + e.what() + ": " + line);
+        throw std::invalid_argument(std::string("ParseInt throw an exception"));
     }
 }
 
@@ -29,24 +29,24 @@ void Parser::ParseConfig(std::ifstream& file, ComputerClub& compClub) {
     std::string line;
     try {
         if (!std::getline(file, line) || line.empty()) {
-            throw std::invalid_argument("ParseConfig throw an exception: Input data format error: " + line);
+            throw std::invalid_argument(line);
         }
         int numTables = ParseInt(line);
 
         if (!std::getline(file, line) || line.empty()) {
-            throw std::invalid_argument("ParseConfig throw an exception: Input data format error: " + line);
+            throw std::invalid_argument(line);
         }
         std::vector<std::string> lineSplit = SplitString(line);
 
         if (lineSplit.size() != 2) {
-            throw std::invalid_argument("ParseConfig throw an exception: Input data format error: " + line);
+            throw std::invalid_argument(line);
         }
 
         Time startTime = ParseTime(lineSplit[0]);
         Time endTime = ParseTime(lineSplit[1]);
 
         if (!std::getline(file, line) || line.empty()) {
-            throw std::invalid_argument("ParseConfig throw an exception: Input data format error: " + line);
+            throw std::invalid_argument(line);
         }
         int pricePerHour = ParseInt(line);
 
@@ -54,7 +54,7 @@ void Parser::ParseConfig(std::ifstream& file, ComputerClub& compClub) {
         compClub.OpenShift();
     }
     catch (const std::invalid_argument& e) {
-        throw std::invalid_argument("ParseConfig throw an exception: Input data format error: " + line);
+        throw std::invalid_argument(e.what());
     }
 }
 
@@ -64,7 +64,7 @@ void Parser::ParseEvents(std::ifstream& file, ComputerClub& compClub) {
         std::vector<std::string> lineSplit = SplitString(line);
 
         if (lineSplit.size() < 3 || lineSplit.size() > 4) {
-            throw std::invalid_argument("ParseEvents throw an exception: Input data format error: " + line);
+            throw std::invalid_argument(line);
         }
 
         Event newEvent;
@@ -80,18 +80,18 @@ void Parser::ParseEvents(std::ifstream& file, ComputerClub& compClub) {
                 newEvent.tableId = ParseInt(lineSplit[3]);
             }
             else if (lineSplit.size() != 3) {
-                throw std::invalid_argument("ParseEvents throw an exception: Input data format error: " + line);
+                throw std::invalid_argument(line);
             }
         }
         catch (const std::invalid_argument& e) {
-            throw std::invalid_argument(std::string("ParseEvents throw an exception: Input data format error: ") + line);
+            throw std::invalid_argument(line);
         }
 
         try {
             compClub.HandleEvent(newEvent);
         }
         catch (const std::invalid_argument& e) {
-            throw std::invalid_argument(std::string("ParseEvents throw an exception: ") + e.what() + ": " + line);
+            throw std::invalid_argument(line);
         }
     }
 
@@ -110,7 +110,7 @@ void Parser::ParseFile(std::string& filename, ComputerClub& compClub) {
         ParseEvents(file, compClub);
     }
     catch (const std::invalid_argument& e) {
-        std::cerr << "Error: ParseFile throw an exception: " << e.what() << std::endl;
+        std::cout << e.what() << std::endl;
         return;
     }
 }
