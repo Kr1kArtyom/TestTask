@@ -45,7 +45,7 @@ void Parser::ParseConfig(std::ifstream& file, ComputerClub& compClub) {
         Time startTime = ParseTime(lineSplit[0]);
         Time endTime = ParseTime(lineSplit[1]);
 
-        if (!std::getline(file, line) || line.empty()) {
+        if (startTime > endTime || !std::getline(file, line) || line.empty()) {
             throw std::invalid_argument(line);
         }
         int pricePerHour = ParseInt(line);
@@ -54,7 +54,7 @@ void Parser::ParseConfig(std::ifstream& file, ComputerClub& compClub) {
         compClub.OpenShift();
     }
     catch (const std::invalid_argument& e) {
-        throw std::invalid_argument(e.what());
+        throw std::invalid_argument(line);
     }
 }
 
