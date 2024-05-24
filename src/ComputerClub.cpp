@@ -141,16 +141,10 @@ void ComputerClub::HadleClientWait(Event event) {
     }
 
     if (IsClientInQueue(event.client)) {
-        GenerateErrorEvent(event, "ClientIsAlreadyWaiting");
         return;
     }
 
-    if (clients[event.client] != Event::withoutTable) {
-        GenerateErrorEvent(event, "ClientIsAlreadySitting");
-        return;
-    }
-
-    if (numFreeTables != 0) {
+    if (numFreeTables != 0 || clients[event.client] != Event::withoutTable) {
         GenerateErrorEvent(event, "ICanWaitNoLonger!");
         return;
     }
